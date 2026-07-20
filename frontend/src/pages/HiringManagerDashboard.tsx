@@ -1,48 +1,100 @@
-import React from 'react';
-import TopBar from '../components/common/TopBar';
-import SideNav from '../components/common/SideNav';
-import { COLORS } from '../constants/theme';
+import React, { useState } from 'react';
 import UpcomingInterviews from '../components/hiring-manager/UpcomingInterviews';
 import EvaluationForm from '../components/hiring-manager/EvaluationForm';
+import ScheduleInterviewModal from '../components/hiring-manager/ScheduleInterviewModal';
+import { Search, Bell, User as UserIcon, CalendarDays, Clock, Target, TrendingUp } from 'lucide-react';
 
 export default function HiringManagerDashboard() {
-  return (
-    <div className="min-h-screen w-full flex flex-col" style={{ backgroundColor: COLORS.bg }}>
-      
-      <TopBar userName="Hiring Manager" userInitials="HM" title="Interviews & Evaluations" /> 
-      
-      <div className="flex flex-1">
-        <SideNav activeItem="Interviews" /> 
-        
-        <main className="flex-1 p-8 overflow-y-auto">
-          <div className="max-w-[1200px] mx-auto">
-            
-            <header className="mb-10 border-b border-gray-800 pb-6 flex justify-between items-end">
-              <div>
-                <h1 
-                  className="text-4xl mb-2 bg-gradient-to-r from-[#BF953F] to-[#FCF6BA] bg-clip-text text-transparent" 
-                  style={{ fontFamily: "'Cinzel', serif" }}
-                >
-                  Interview Management
-                </h1>
-                <p className="text-gray-400 text-sm tracking-wide">
-                  Schedule, manage, and submit candidate evaluations.
-                </p>
-              </div>
-            </header>
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-              <div className="lg:col-span-7 flex flex-col gap-6">
-                <UpcomingInterviews />
+  return (
+    <div className="w-full min-h-screen bg-[#0b111a] text-white font-sans flex flex-col">
+      
+      {/* Top Application Nav Bar */}
+      <nav className="w-full bg-[#131b26] border-b border-slate-800 px-8 py-4 flex justify-between items-center z-10">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-cyan-500 rounded flex items-center justify-center font-bold text-[#0b111a]">TF</div>
+          <span className="text-xl font-bold tracking-wider">TalentFlow <span className="text-cyan-400">AI</span></span>
+        </div>
+        
+        <div className="flex-1 max-w-xl mx-8">
+          <div className="relative group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+            <input 
+              type="text" 
+              placeholder="Search candidates, interviews, or evaluations..." 
+              className="w-full bg-[#0b111a] border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition-all"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-6">
+          <button className="relative text-slate-400 hover:text-white transition-colors">
+            <Bell className="w-5 h-5" />
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-cyan-400 rounded-full border-2 border-[#131b26]"></span>
+          </button>
+          <div className="flex items-center gap-3 border-l border-slate-800 pl-6">
+            <div className="text-right">
+              <div className="text-sm font-bold text-white">Nimsara Lakmal</div>
+              <div className="text-[10px] text-cyan-400 uppercase tracking-widest">Hiring Manager</div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center">
+              <UserIcon className="w-5 h-5 text-slate-400" />
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content Area */}
+      <div className="p-8 flex-1">
+        
+        {/* Header Section */}
+        <div className="flex justify-between items-end pb-6 mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-white tracking-wide">Interview Management</h1>
+            <p className="text-slate-400 mt-2 text-sm">Schedule, evaluate, and orchestrate candidate sequences.</p>
+          </div>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-cyan-500/10 border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-[#0b111a] font-semibold py-2.5 px-6 rounded-lg transition-all duration-300 shadow-[0_0_15px_rgba(34,211,238,0.15)] flex items-center gap-2"
+          >
+            <CalendarDays className="w-4 h-4" />
+            Schedule Interview
+          </button>
+        </div>
+
+        {/* KPI Metrics Ribbon */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          {[
+            { label: 'Pending Evaluations', value: '3', icon: Clock, color: 'text-amber-400', bg: 'bg-amber-400/10' },
+            { label: 'Interviews Today', value: '4', icon: CalendarDays, color: 'text-cyan-400', bg: 'bg-cyan-400/10' },
+            { label: 'Avg Match Score', value: '82%', icon: Target, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
+            { label: 'Conversion Rate', value: '68%', icon: TrendingUp, color: 'text-purple-400', bg: 'bg-purple-400/10' },
+          ].map((kpi, index) => (
+            <div key={index} className="bg-[#131b26] border border-slate-800 rounded-xl p-5 flex items-center justify-between shadow-lg">
+              <div>
+                <div className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">{kpi.label}</div>
+                <div className="text-2xl font-bold text-white">{kpi.value}</div>
               </div>
-              <div className="lg:col-span-5 flex flex-col gap-6">
-                <EvaluationForm />
+              <div className={`w-10 h-10 rounded-lg ${kpi.bg} flex items-center justify-center`}>
+                <kpi.icon className={`w-5 h-5 ${kpi.color}`} />
               </div>
             </div>
+          ))}
+        </div>
 
-          </div>
-        </main>
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           <div className="col-span-2">
+              <UpcomingInterviews />
+           </div>
+           <div>
+              <EvaluationForm />
+           </div>
+        </div>
       </div>
+
+      <ScheduleInterviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
