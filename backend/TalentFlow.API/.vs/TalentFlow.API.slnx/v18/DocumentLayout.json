@@ -1,0 +1,292 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\controllers\\evaluationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\controllers\\evaluationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\controllers\\interviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\controllers\\interviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720185241_AddEvaluationsTable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TalentFlow.API\\Migrations\\20260720185241_AddEvaluationsTable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\models\\evaluation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\models\\evaluation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720183514_AddCandidateEmail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TalentFlow.API\\Migrations\\20260720183514_AddCandidateEmail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\models\\interview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\models\\interview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720151459_UpdateInterviewSchema.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TalentFlow.API\\Migrations\\20260720151459_UpdateInterviewSchema.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720140746_AddEvaluationMatrixFields.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TalentFlow.API\\Migrations\\20260720140746_AddEvaluationMatrixFields.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\dtos\\interviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\dtos\\interviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|c:\\users\\nimsa\\documents\\github\\sa-project\\backend\\talentflow.api\\talentflow.api\\dtos\\createevaluationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3457AFB6-85C1-DD41-E975-502314C431A7}|TalentFlow.API\\TalentFlow.API.csproj|solutionrelative:talentflow.api\\dtos\\createevaluationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "20260720151459_UpdateInterviewSchema.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720151459_UpdateInterviewSchema.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Migrations\\20260720151459_UpdateInterviewSchema.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720151459_UpdateInterviewSchema.cs",
+              "RelativeToolTip": "TalentFlow.API\\Migrations\\20260720151459_UpdateInterviewSchema.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T15:14:59.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "InterviewDto.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\DTOs\\InterviewDto.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\DTOs\\InterviewDto.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\DTOs\\InterviewDto.cs",
+              "RelativeToolTip": "TalentFlow.API\\DTOs\\InterviewDto.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAkwBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:57:11.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "TalentFlow.API\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:05:45.669Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InterviewController.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Controllers\\InterviewController.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Controllers\\InterviewController.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Controllers\\InterviewController.cs",
+              "RelativeToolTip": "TalentFlow.API\\Controllers\\InterviewController.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAwEQAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:58:09.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Program.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Program.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Program.cs",
+              "RelativeToolTip": "TalentFlow.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAMBkwGAAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:26:51.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EvaluationController.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Controllers\\EvaluationController.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Controllers\\EvaluationController.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Controllers\\EvaluationController.cs",
+              "RelativeToolTip": "TalentFlow.API\\Controllers\\EvaluationController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAIwDMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:09:20.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260720185241_AddEvaluationsTable.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720185241_AddEvaluationsTable.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Migrations\\20260720185241_AddEvaluationsTable.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720185241_AddEvaluationsTable.cs",
+              "RelativeToolTip": "TalentFlow.API\\Migrations\\20260720185241_AddEvaluationsTable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T18:52:41.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Services\\EmailService.cs",
+              "RelativeToolTip": "TalentFlow.API\\Services\\EmailService.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAkwFsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:59:16.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Interview.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Models\\Interview.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Models\\Interview.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Models\\Interview.cs",
+              "RelativeToolTip": "TalentFlow.API\\Models\\Interview.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:56:35.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Evaluation.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Models\\Evaluation.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Models\\Evaluation.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Models\\Evaluation.cs",
+              "RelativeToolTip": "TalentFlow.API\\Models\\Evaluation.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAA4wBQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:03:08.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\appsettings.json",
+              "RelativeDocumentMoniker": "TalentFlow.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\appsettings.json",
+              "RelativeToolTip": "TalentFlow.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-20T15:04:44.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "20260720183514_AddCandidateEmail.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720183514_AddCandidateEmail.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Migrations\\20260720183514_AddCandidateEmail.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720183514_AddCandidateEmail.cs",
+              "RelativeToolTip": "TalentFlow.API\\Migrations\\20260720183514_AddCandidateEmail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T18:35:14.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Models\\User.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Models\\User.cs",
+              "RelativeToolTip": "TalentFlow.API\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:26:48.569Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "20260720140746_AddEvaluationMatrixFields.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720140746_AddEvaluationMatrixFields.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Migrations\\20260720140746_AddEvaluationMatrixFields.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Migrations\\20260720140746_AddEvaluationMatrixFields.cs",
+              "RelativeToolTip": "TalentFlow.API\\Migrations\\20260720140746_AddEvaluationMatrixFields.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:07:47.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "TalentFlow.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "TalentFlow.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-20T14:05:59.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CreateEvaluationDto.cs",
+              "DocumentMoniker": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\DTOs\\CreateEvaluationDto.cs",
+              "RelativeDocumentMoniker": "TalentFlow.API\\DTOs\\CreateEvaluationDto.cs",
+              "ToolTip": "C:\\Users\\nimsa\\Documents\\GitHub\\SA-project\\backend\\TalentFlow.API\\TalentFlow.API\\DTOs\\CreateEvaluationDto.cs",
+              "RelativeToolTip": "TalentFlow.API\\DTOs\\CreateEvaluationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:04:31.704Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
