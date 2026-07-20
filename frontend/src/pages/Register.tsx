@@ -1,4 +1,5 @@
-import React, { useState, type ChangeEvent, type FormEvent } from 'react';
+import React, { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 type UserRole = 'Candidate' | 'Recruiter' | 'HiringManager';
 
@@ -10,7 +11,7 @@ interface RegisterFormData {
   role: UserRole;
 }
 
-const Register: React.FC = () => {
+const Register = () => {
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: '',
     email: '',
@@ -30,20 +31,23 @@ const Register: React.FC = () => {
       return;
     }
     console.log("Register Request:", formData);
-    // Backend Register API (axios.post('/api/auth/register', formData))
   };
 
   return (
-    <div className="min-h-screen bg-[#0B132B] flex items-center justify-center p-4 font-sans">
-      <div className="bg-[#1C2541] p-8 rounded-2xl shadow-2xl w-full max-w-lg border border-[#2A365B]">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-white tracking-wide">Create an Account</h1>
-          <p className="text-gray-400 text-sm mt-1">Join TalentFlow AI platform today</p>
+    <div className="min-h-screen w-full bg-[#0B132B] flex items-center justify-center p-4 font-sans">
+      {/* Register Card Container */}
+      <div className="bg-[#1C2541] p-6 rounded-xl shadow-2xl w-full max-w-md border border-[#2A365B]">
+        
+        {/* Header */}
+        <div className="text-center mb-5">
+          <h1 className="text-2xl font-bold tracking-tight text-white">Create an Account</h1>
+          <p className="text-xs text-gray-400 mt-1">Join TalentFlow AI platform today</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-3.5">
           <div>
-            <label className="block text-gray-300 text-sm mb-1">Full Name</label>
+            <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
             <input
               type="text"
               name="fullName"
@@ -51,12 +55,12 @@ const Register: React.FC = () => {
               value={formData.fullName}
               onChange={handleChange}
               placeholder="Sashik Mindaka"
-              className="w-full px-4 py-2.5 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm mb-1">Email Address</label>
+            <label className="block text-xs font-medium text-gray-300 mb-1">Email Address</label>
             <input
               type="email"
               name="email"
@@ -64,17 +68,17 @@ const Register: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="sashik@example.com"
-              className="w-full px-4 py-2.5 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm mb-1">I am registering as a:</label>
+            <label className="block text-xs font-medium text-gray-300 mb-1">I am registering as a:</label>
             <select
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none cursor-pointer"
+              className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none cursor-pointer"
             >
               <option value="Candidate">Candidate (Job Seeker)</option>
               <option value="Recruiter">Recruiter / HR</option>
@@ -82,9 +86,9 @@ const Register: React.FC = () => {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-gray-300 text-sm mb-1">Password</label>
+              <label className="block text-xs font-medium text-gray-300 mb-1">Password</label>
               <input
                 type="password"
                 name="password"
@@ -92,11 +96,11 @@ const Register: React.FC = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
+                className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-gray-300 text-sm mb-1">Confirm Password</label>
+              <label className="block text-xs font-medium text-gray-300 mb-1">Confirm Password</label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -104,22 +108,24 @@ const Register: React.FC = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
+                className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 mt-2 bg-gradient-to-r from-[#00C896] to-[#00E5FF] text-black font-bold rounded-lg hover:opacity-90 transition shadow-lg shadow-[#00E5FF]/20"
+            className="w-full py-2.5 mt-2 bg-gradient-to-r from-[#00C896] to-[#00E5FF] text-black font-semibold text-xs rounded-md hover:opacity-90 transition shadow-md shadow-[#00E5FF]/10"
           >
             Register
           </button>
         </form>
 
-        <p className="text-gray-400 text-sm text-center mt-5">
+        {/* Footer */}
+        <p className="text-xs text-gray-400 text-center mt-5">
           Already have an account? <a href="/login" className="text-[#00E5FF] hover:underline font-medium">Log in</a>
         </p>
+
       </div>
     </div>
   );

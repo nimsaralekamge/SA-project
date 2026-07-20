@@ -1,10 +1,12 @@
-import React, { useState, type ChangeEvent, type FormEvent } from 'react';
+import React, { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+
 interface LoginFormData {
   email: string;
   password: string;
 }
 
-const Login: React.FC = () => {
+const Login = () => {
   const [formData, setFormData] = useState<LoginFormData>({ email: '', password: '' });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -14,22 +16,25 @@ const Login: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     console.log("Login Request:", formData);
-    // Backend JWT Login API (axios.post('/api/auth/login', formData))
   };
 
   return (
-    <div className="min-h-screen bg-[#0B132B] flex items-center justify-center p-4 font-sans">
-      <div className="bg-[#1C2541] p-8 rounded-2xl shadow-2xl w-full max-w-md border border-[#2A365B]">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white tracking-wide">
+    <div className="min-h-screen w-full bg-[#0B132B] flex items-center justify-center p-4 font-sans">
+      {/* Login Card Container */}
+      <div className="bg-[#1C2541] p-6 rounded-xl shadow-2xl w-full max-w-sm border border-[#2A365B]">
+        
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold tracking-tight text-white">
             TalentFlow <span className="text-[#00E5FF]">AI</span>
           </h1>
-          <p className="text-gray-400 text-sm mt-2">Welcome back! Please enter your details.</p>
+          <p className="text-xs text-gray-400 mt-1">Welcome back! Please enter your details.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-300 text-sm mb-2">Email Address</label>
+            <label className="block text-xs font-medium text-gray-300 mb-1">Email Address</label>
             <input
               type="email"
               name="email"
@@ -37,12 +42,12 @@ const Login: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="e.g. user@nsbm.ac.lk"
-              className="w-full px-4 py-3 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none transition"
+              className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm mb-2">Password</label>
+            <label className="block text-xs font-medium text-gray-300 mb-1">Password</label>
             <input
               type="password"
               name="password"
@@ -50,29 +55,31 @@ const Login: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-3 rounded-lg bg-[#0B132B] text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none transition"
+              className="w-full px-3 py-2 rounded-md bg-[#0B132B] text-xs text-white border border-[#2A365B] focus:border-[#00E5FF] focus:outline-none transition-colors"
             />
           </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center text-gray-400 cursor-pointer">
-              <input type="checkbox" className="mr-2 rounded bg-[#0B132B] border-[#2A365B] text-[#00E5FF]" />
+          <div className="flex items-center justify-between text-xs pt-1">
+            <label className="flex items-center text-gray-400 cursor-pointer select-none">
+              <input type="checkbox" className="mr-1.5 rounded bg-[#0B132B] border-[#2A365B] text-[#00E5FF] focus:ring-0" />
               Remember me
             </label>
-            <a href="/forgot-password" className="text-[#00E5FF] hover:underline font-medium">Forgot password?</a>
+            <a href="/forgot-password" className="text-[#00E5FF] hover:underline">Forgot password?</a>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 bg-gradient-to-r from-[#00C896] to-[#00E5FF] text-black font-bold rounded-lg hover:opacity-90 transition shadow-lg shadow-[#00E5FF]/20"
+            className="w-full py-2.5 mt-2 bg-gradient-to-r from-[#00C896] to-[#00E5FF] text-black font-semibold text-xs rounded-md hover:opacity-90 transition-opacity shadow-md shadow-[#00E5FF]/10"
           >
             Sign In
           </button>
         </form>
 
-        <p className="text-gray-400 text-sm text-center mt-6">
+        {/* Footer */}
+        <p className="text-xs text-gray-400 text-center mt-6">
           Don't have an account? <a href="/register" className="text-[#00E5FF] hover:underline font-medium">Sign up</a>
         </p>
+
       </div>
     </div>
   );
