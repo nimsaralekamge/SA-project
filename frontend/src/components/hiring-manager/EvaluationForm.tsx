@@ -1,101 +1,182 @@
-import React, { useState } from 'react';
-import { Target, Server, Users, MessageSquare } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 export default function EvaluationForm() {
-  const [scores, setScores] = useState({
-    technical: 75,
-    systemDesign: 60,
-    communication: 80,
-    cultureFit: 90,
-  });
+  const [candidates, setCandidates] = useState<any[]>([]);
+  const [selectedCandidate, setSelectedCandidate] = useState('');
+  const [technicalDepth, setTechnicalDepth] = useState(75);
+  const [systemDesign, setSystemDesign] = useState(60);
+  const [communication, setCommunication] = useState(80);
+  const [cultureAlignment, setCultureAlignment] = useState(90);
+  const [summary, setSummary] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const [comments, setComments] = useState('');
+  // Fetch list of candidates/interviews on load to populate the dropdown
+  useEffect(() => {
+    fetch('https://localhost:7083/api/Interview')
+      .then((res) => res.json())
+      .then((data) => setCandidates(data))
+      .catch((err) => console.error('Failed to load candidates', err));
+  }, []);
 
-  const totalScore = Math.round(
-    (scores.technical * 0.4) + 
-    (scores.systemDesign * 0.3) + 
-    (scores.communication * 0.2) + 
-    (scores.cultureFit * 0.1)
+  const overallMatchScore = Math.round(
+    (technicalDepth * 0.4) +
+    (systemDesign * 0.3) +
+    (communication * 0.2) +
+    (cultureAlignment * 0.1)
   );
 
-  const getScoreColor = (score: number) => {
-    if (score >= 70) return 'from-cyan-500 to-cyan-300';
-    return 'from-slate-500 to-slate-400';
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedCandidate) {
+      alert('Please select a candidate to evaluate.');
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const response = await fetch('https://localhost:7083/api/Evaluation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          candidateName: selectedCandidate,
+          technicalDepthScore: technicalDepth,
+          systemDesignScore: systemDesign,
+          communicationScore: communication,
+          cultureAlignmentScore: cultureAlignment,
+          executiveSummary: summary,
+          overallMatchScore: overallMatchScore
+        })
+      });
+
+      if (response.ok) {
+        alert('Official evaluation saved for ' + selectedCandidate + '!');
+      }
+    } catch (err) {
+      console.error('Failed to submit evaluation', err);
+    } finally {
+      setSubmitting(false);
+    }
   };
-
-  const renderIndicator = (label: string, key: keyof typeof scores, weight: number, Icon: any) => (
-    <div className="mb-5 group">
-      <div className="flex justify-between items-end mb-2">
-        <div className="flex items-center gap-2">
-          <Icon className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors" />
-          <label className="text-[11px] tracking-widest text-slate-300 uppercase font-bold">
-            {label} <span className="text-slate-500 lowercase tracking-normal font-normal">({weight * 100}%)</span>
-          </label>
-        </div>
-        <span className="text-sm font-bold text-white bg-[#0b111a] px-2 py-0.5 rounded border border-slate-700">{scores[key]}</span>
-      </div>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={scores[key]}
-        onChange={(e) => setScores({ ...scores, [key]: parseInt(e.target.value) })}
-        className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400 hover:accent-cyan-300"
-      />
-      <div className="w-full bg-[#0b111a] h-1 rounded-full mt-2 overflow-hidden border border-slate-800/50">
-        <div 
-          className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(scores[key])} transition-all duration-300 ease-out`}
-          style={{ width: `${scores[key]}%` }}
-        ></div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="bg-[#131b26] border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-      <div className="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
-        <h3 className="text-xl font-bold text-white flex items-center gap-2">
-          <Target className="w-5 h-5 text-cyan-400" /> Evaluation Matrix
-        </h3>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-xl font-bold text-white">Evaluation Matrix</h3>
         
-        <div className="flex items-center gap-3 bg-[#0b111a] px-4 py-2 rounded-xl border border-slate-800">
-          <div className="text-right">
-            <div className="text-[10px] text-slate-400 uppercase tracking-widest">Match Score</div>
-            <div className="text-xl font-bold text-white">{totalScore}%</div>
+        <div className="bg-[#0b111a] border border-slate-800 rounded-xl p-3 flex items-center gap-4">
+          <div>
+            <div className="text-[10px] tracking-widest text-slate-400 font-bold uppercase">Match Score</div>
+            <div className="text-xl font-extrabold text-white mt-0.5">{overallMatchScore}%</div>
           </div>
-          <svg className="w-10 h-10 transform -rotate-90">
-             <circle cx="20" cy="20" r="16" stroke="currentColor" strokeWidth="3" fill="transparent" className="text-slate-800" />
-             <circle 
-                cx="20" cy="20" r="16" stroke="currentColor" strokeWidth="3" fill="transparent" 
-                strokeDasharray={`${2 * Math.PI * 16}`} 
-                strokeDashoffset={`${2 * Math.PI * 16 * (1 - totalScore / 100)}`}
-                className={`${totalScore >= 70 ? 'text-cyan-400' : 'text-slate-500'} transition-all duration-1000 ease-out`} 
-             />
-          </svg>
+          <div className="relative w-12 h-12 flex items-center justify-center">
+            <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
+              <path
+                className="text-slate-800"
+                strokeWidth="3.5"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="text-cyan-400 transition-all duration-300"
+                strokeWidth="3.5"
+                strokeDasharray={`${overallMatchScore}, 100`}
+                strokeLinecap="round"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-2">
-        {renderIndicator('Technical Depth', 'technical', 0.4, Server)}
-        {renderIndicator('System Design', 'systemDesign', 0.3, Target)}
-        {renderIndicator('Communication', 'communication', 0.2, MessageSquare)}
-        {renderIndicator('Culture Alignment', 'cultureFit', 0.1, Users)}
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Candidate Selector Dropdown */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Select Candidate</label>
+          <select 
+            value={selectedCandidate}
+            onChange={(e) => setSelectedCandidate(e.target.value)}
+            className="w-full bg-[#0b111a] border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-400 outline-none transition-all cursor-pointer"
+          >
+            <option value="">-- Choose Candidate from Pipeline --</option>
+            {candidates.map((c) => (
+              <option key={c.id} value={c.candidateName}>
+                {c.candidateName} ({c.candidateRole})
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div className="mt-6">
-        <label className="text-[11px] tracking-widest text-slate-400 uppercase font-bold mb-2 block">Executive Summary</label>
-        <textarea 
-          rows={3}
-          value={comments}
-          onChange={(e) => setComments(e.target.value)}
-          className="w-full bg-[#0b111a] border border-slate-700 rounded-xl p-4 text-sm text-slate-300 focus:border-cyan-400 outline-none transition-colors resize-none"
-          placeholder="Detail the candidate's core strengths..."
-        />
-      </div>
+        <div>
+          <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
+            <span>TECHNICAL DEPTH (40%)</span>
+            <span className="text-cyan-400 font-bold">{technicalDepth}</span>
+          </div>
+          <input 
+            type="range" min="0" max="100" value={technicalDepth} 
+            onChange={(e) => setTechnicalDepth(Number(e.target.value))}
+            className="w-full accent-cyan-400 cursor-pointer"
+          />
+        </div>
 
-      <button className="w-full mt-6 py-3.5 bg-cyan-500 hover:bg-cyan-400 text-[#0b111a] font-bold rounded-xl shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
-        Submit Official Evaluation
-      </button>
+        <div>
+          <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
+            <span>SYSTEM DESIGN (30%)</span>
+            <span className="text-cyan-400 font-bold">{systemDesign}</span>
+          </div>
+          <input 
+            type="range" min="0" max="100" value={systemDesign} 
+            onChange={(e) => setSystemDesign(Number(e.target.value))}
+            className="w-full accent-cyan-400 cursor-pointer"
+          />
+        </div>
+
+        <div>
+          <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
+            <span>COMMUNICATION (20%)</span>
+            <span className="text-cyan-400 font-bold">{communication}</span>
+          </div>
+          <input 
+            type="range" min="0" max="100" value={communication} 
+            onChange={(e) => setCommunication(Number(e.target.value))}
+            className="w-full accent-cyan-400 cursor-pointer"
+          />
+        </div>
+
+        <div>
+          <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
+            <span>CULTURE ALIGNMENT (10%)</span>
+            <span className="text-cyan-400 font-bold">{cultureAlignment}</span>
+          </div>
+          <input 
+            type="range" min="0" max="100" value={cultureAlignment} 
+            onChange={(e) => setCultureAlignment(Number(e.target.value))}
+            className="w-full accent-cyan-400 cursor-pointer"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Executive Summary</label>
+          <textarea 
+            rows={2}
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            placeholder="Detail the candidate's core strengths..."
+            className="w-full bg-[#0b111a] border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-400 outline-none resize-none transition-all"
+          />
+        </div>
+
+        <button 
+          type="submit"
+          disabled={submitting}
+          className="w-full bg-cyan-500/10 border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-[#0b111a] font-bold py-3 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(34,211,238,0.15)] uppercase tracking-wider text-sm"
+        >
+          {submitting ? 'Submitting Evaluation...' : 'Submit Official Evaluation'}
+        </button>
+      </form>
     </div>
   );
 }

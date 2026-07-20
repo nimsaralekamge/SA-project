@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UpcomingInterviews from '../components/hiring-manager/UpcomingInterviews';
 import EvaluationForm from '../components/hiring-manager/EvaluationForm';
 import ScheduleInterviewModal from '../components/hiring-manager/ScheduleInterviewModal';
@@ -6,6 +6,22 @@ import { Search, Bell, User as UserIcon, CalendarDays, Clock, Target, TrendingUp
 
 export default function HiringManagerDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [stats, setStats] = useState({
+    pendingEvaluations: 3,
+    interviewsToday: 4,
+    avgMatchScore: 82,
+    conversionRate: 68
+  });
+
+  useEffect(() => {
+    fetch('https://localhost:7083/api/Interview/stats')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch dashboard stats');
+        return res.json();
+      })
+      .then((data) => setStats(data))
+      .catch((err) => console.error('Error loading dashboard stats:', err));
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-[#0b111a] text-white font-sans flex flex-col">
@@ -66,10 +82,10 @@ export default function HiringManagerDashboard() {
         {/* KPI Metrics Ribbon */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {[
-            { label: 'Pending Evaluations', value: '3', icon: Clock, color: 'text-amber-400', bg: 'bg-amber-400/10' },
-            { label: 'Interviews Today', value: '4', icon: CalendarDays, color: 'text-cyan-400', bg: 'bg-cyan-400/10' },
-            { label: 'Avg Match Score', value: '82%', icon: Target, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-            { label: 'Conversion Rate', value: '68%', icon: TrendingUp, color: 'text-purple-400', bg: 'bg-purple-400/10' },
+            { label: 'Pending Evaluations', value: stats.pendingEvaluations, icon: Clock, color: 'text-amber-400', bg: 'bg-amber-400/10' },
+            { label: 'Interviews Today', value: stats.interviewsToday, icon: CalendarDays, color: 'text-cyan-400', bg: 'bg-cyan-400/10' },
+            { label: 'Avg Match Score', value: `${stats.avgMatchScore}%`, icon: Target, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
+            { label: 'Conversion Rate', value: `${stats.conversionRate}%`, icon: TrendingUp, color: 'text-purple-400', bg: 'bg-purple-400/10' },
           ].map((kpi, index) => (
             <div key={index} className="bg-[#131b26] border border-slate-800 rounded-xl p-5 flex items-center justify-between shadow-lg">
               <div>

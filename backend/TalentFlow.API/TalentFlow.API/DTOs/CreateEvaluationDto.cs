@@ -1,21 +1,12 @@
-﻿using System;
-
-namespace TalentFlow.API.Models
+﻿namespace TalentFlow.API.DTOs
 {
-    public class Evaluation
+    public class CreateEvaluationDto
     {
-        public int Id { get; set; }
         public int CandidateId { get; set; }
-
-        // The new dashboard matrix scores
         public int TechnicalDepthScore { get; set; }
         public int SystemDesignScore { get; set; }
         public int CommunicationScore { get; set; }
         public int CultureAlignmentScore { get; set; }
-
-        public int OverallMatchScore { get; set; }
         public string ExecutiveSummary { get; set; } = string.Empty;
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

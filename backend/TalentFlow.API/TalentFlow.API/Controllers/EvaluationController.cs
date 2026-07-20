@@ -2,6 +2,9 @@
 using TalentFlow.API.Data;
 using TalentFlow.API.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
 
 namespace TalentFlow.API.Controllers
 {
@@ -25,23 +28,25 @@ namespace TalentFlow.API.Controllers
 
         // POST: api/Evaluation
         [HttpPost]
-        public async Task<ActionResult<Evaluation>> PostEvaluation(Evaluation evaluation)
+        public async Task<ActionResult<Evaluation>> PostEvaluation([FromBody] Evaluation evaluation)
         {
+            // Automatically calculate the weighted overall match score if not provided
+            if (evaluation.OverallMatchScore == 0)
+            {
+                evaluation.OverallMatchScore = (int)Math.Round(
+                    (evaluation.TechnicalDepthScore * 0.4) +
+                    (evaluation.SystemDesignScore * 0.3) +
+                    (evaluation.CommunicationScore * 0.2) +
+                    (evaluation.CultureAlignmentScore * 0.1)
+                );
+            }
+
+            evaluation.CreatedAt = DateTime.UtcNow;
+
             _context.Evaluations.Add(evaluation);
             await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetEvaluations), new { id = evaluation.Id }, evaluation);
-        }
-
-        // DELETE: api/Evaluation/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvaluation(int id)
-        {
-            var evaluation = await _context.Evaluations.FindAsync(id);
-            if (evaluation == null) return NotFound();
-
-            _context.Evaluations.Remove(evaluation);
-            await _context.SaveChangesAsync();
-            return NoContent();
         }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TalentFlow.API.Data;
-using TalentFlow.API.Services; // 1. EmailService Namespace එක Import කළා
+using TalentFlow.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 3. JWT Authentication Setup (Fixed Default Schemes)
+// 3. JWT Authentication Setup
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,13 +43,31 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// 4. Register Custom Services (EmailService)
+// 4. Register Custom Services
 builder.Services.AddScoped<EmailService>();
 
 // Controllers setup
 builder.Services.AddControllers();
 
+// Swagger Services
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+// Auto Migration on Startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
+
+// Swagger Middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Enable CORS
 app.UseCors("AllowAll");
@@ -67,13 +85,6 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(wwwrootPath),
     RequestPath = ""
 });
-
-// Auto Migration on Startup
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.Migrate();
-}
 
 app.UseHttpsRedirection();
 

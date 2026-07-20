@@ -3,18 +3,59 @@ import React, { useState } from 'react';
 interface ScheduleModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onInterviewScheduled?: () => void; // Optional callback to refresh your dashboard list
 }
 
-export default function ScheduleInterviewModal({ isOpen, onClose }: ScheduleModalProps) {
+export default function ScheduleInterviewModal({ isOpen, onClose, onInterviewScheduled }: ScheduleModalProps) {
   const [formData, setFormData] = useState({
     candidateName: '',
-    interviewType: 'Technical Round 1',
+    candidateEmail: '', // <-- Added email state
+    candidateRole: 'Frontend Engineer', // Matches your dropdown/cards
+    pipelineStage: 'Technical Depth',
     dateTime: '',
-    syncCalendar: true,
-    sendReminder: true,
+    durationMinutes: 60, // Default duration
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
   if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5016/api/Interview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          candidateName: formData.candidateName,
+          candidateEmail: formData.candidateEmail,
+          candidateRole: formData.candidateRole,
+          pipelineStage: formData.pipelineStage,
+          scheduledTime: new Date(formData.dateTime).toISOString(),
+          durationMinutes: Number(formData.durationMinutes),
+          status: 'Upcoming'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to schedule interview on the backend.');
+      }
+
+      // Success! Reset and close
+      setLoading(false);
+      if (onInterviewScheduled) onInterviewScheduled();
+      onClose();
+    } catch (err: any) {
+      setLoading(false);
+      setError(err.message || 'Something went wrong.');
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 transition-opacity">
@@ -24,16 +65,35 @@ export default function ScheduleInterviewModal({ isOpen, onClose }: ScheduleModa
           <h2 className="text-xl font-bold text-white tracking-wide">Schedule New Interview</h2>
           <button onClick={onClose} className="text-slate-500 hover:text-white text-2xl">&times;</button>
         </div>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/20 border border-red-500 text-red-300 text-sm rounded-lg">
+            {error}
+          </div>
+        )}
         
-        <form onSubmit={(e) => { e.preventDefault(); onClose(); }} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>
             <label className="text-xs tracking-widest text-slate-400 uppercase mb-1 block">Candidate Name</label>
             <input 
               type="text" 
               className="w-full bg-[#0b111a] border border-slate-700 rounded-lg p-3 text-white focus:border-cyan-400 outline-none transition-colors"
-              placeholder="e.g. Sarah Perera"
+              placeholder="e.g. Sithum Manodhara"
+              value={formData.candidateName}
               onChange={(e) => setFormData({...formData, candidateName: e.target.value})}
+              required 
+            />
+          </div>
+
+          <div>
+            <label className="text-xs tracking-widest text-slate-400 uppercase mb-1 block">Candidate Email</label>
+            <input 
+              type="email" 
+              className="w-full bg-[#0b111a] border border-slate-700 rounded-lg p-3 text-white focus:border-cyan-400 outline-none transition-colors"
+              placeholder="e.g. candidate@gmail.com"
+              value={formData.candidateEmail}
+              onChange={(e) => setFormData({...formData, candidateEmail: e.target.value})}
               required 
             />
           </div>
@@ -43,7 +103,8 @@ export default function ScheduleInterviewModal({ isOpen, onClose }: ScheduleModa
               <label className="text-xs tracking-widest text-slate-400 uppercase mb-1 block">Stage</label>
               <select 
                 className="w-full bg-[#0b111a] border border-slate-700 rounded-lg p-3 text-white focus:border-cyan-400 outline-none transition-colors"
-                onChange={(e) => setFormData({...formData, interviewType: e.target.value})}
+                value={formData.pipelineStage}
+                onChange={(e) => setFormData({...formData, pipelineStage: e.target.value})}
               >
                 <option>Screening Call</option>
                 <option>Technical Depth</option>
@@ -56,42 +117,23 @@ export default function ScheduleInterviewModal({ isOpen, onClose }: ScheduleModa
               <input 
                 type="datetime-local" 
                 className="w-full bg-[#0b111a] border border-slate-700 rounded-lg p-3 text-white focus:border-cyan-400 outline-none transition-colors"
+                value={formData.dateTime}
                 onChange={(e) => setFormData({...formData, dateTime: e.target.value})}
                 required
               />
             </div>
           </div>
 
-          <div className="p-4 bg-[#1e293b] rounded-lg border border-slate-700 space-y-3 mt-4">
-            <span className="text-[10px] font-bold uppercase text-cyan-400 tracking-widest">System Integrations</span>
-            
-            <label className="flex items-center justify-between text-sm cursor-pointer group">
-              <span className="text-slate-300 group-hover:text-cyan-400 transition-colors">Sync to Outlook / Google Calendar</span>
-              <input 
-                type="checkbox" 
-                checked={formData.syncCalendar}
-                onChange={(e) => setFormData({...formData, syncCalendar: e.target.checked})}
-                className="accent-cyan-400 h-4 w-4"
-              />
-            </label>
-
-            <label className="flex items-center justify-between text-sm cursor-pointer group">
-              <span className="text-slate-300 group-hover:text-cyan-400 transition-colors">Automated SMS/Email Reminder</span>
-              <input 
-                type="checkbox" 
-                checked={formData.sendReminder}
-                onChange={(e) => setFormData({...formData, sendReminder: e.target.checked})}
-                className="accent-cyan-400 h-4 w-4"
-              />
-            </label>
-          </div>
-
           <div className="flex justify-end gap-4 mt-8">
             <button type="button" onClick={onClose} className="px-5 py-2.5 text-slate-400 hover:text-white transition-colors text-sm font-semibold tracking-wide">
               Cancel
             </button>
-            <button type="submit" className="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0b111a] font-bold rounded-lg text-sm tracking-wide shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all">
-              Initialize Sequence
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0b111a] font-bold rounded-lg text-sm tracking-wide shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all disabled:opacity-50"
+            >
+              {loading ? 'Initializing...' : 'Initialize Sequence'}
             </button>
           </div>
         </form>
