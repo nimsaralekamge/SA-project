@@ -55,7 +55,7 @@ export default function RecruiterJobPostingPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [panelOpen, setPanelOpen] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState<JobFormValues>(EMPTY_FORM);
   const [skillInput, setSkillInput] = useState("");
   const [saving, setSaving] = useState(false);
@@ -75,6 +75,7 @@ export default function RecruiterJobPostingPage() {
 
   function openEditPanel(job: Job) {
     const { id, postedBy, postedAt, applicantCount, ...values } = job;
+
     setEditingId(id);
     setForm(values);
     setSkillInput("");
@@ -83,36 +84,58 @@ export default function RecruiterJobPostingPage() {
 
   function addSkill() {
     const value = skillInput.trim();
+
     if (!value || form.skills.includes(value)) return;
-    setForm((f) => ({ ...f, skills: [...f.skills, value] }));
+
+    setForm((f) => ({
+      ...f,
+      skills: [...f.skills, value],
+    }));
+
     setSkillInput("");
   }
 
   function removeSkill(skill: string) {
-    setForm((f) => ({ ...f, skills: f.skills.filter((s) => s !== skill) }));
+    setForm((f) => ({
+      ...f,
+      skills: f.skills.filter((s) => s !== skill),
+    }));
   }
 
   async function handleSubmit(status: JobStatus) {
     setSaving(true);
-    const payload: JobFormValues = { ...form, status };
+
+    const payload: JobFormValues = {
+      ...form,
+      status,
+    };
+
     try {
-      if (editingId) {
+      if (editingId !== null) {
         const updated = await updateJob(editingId, payload);
-        setJobs((prev) => prev.map((j) => (j.id === editingId ? updated : j)));
+
+        setJobs((prev) =>
+          prev.map((j) =>
+            j.id === editingId ? updated : j
+          )
+        );
       } else {
         const created = await createJob(payload);
+
         setJobs((prev) => [created, ...prev]);
       }
+
       setPanelOpen(false);
     } finally {
       setSaving(false);
     }
   }
 
-  async function handleDelete(id: string) {
+  async function handleDelete(id: number) {
     setJobs((prev) => prev.filter((j) => j.id !== id));
     await deleteJob(id);
   }
+
 
   return (
     <div className="min-h-screen bg-[#1A2126] text-white">

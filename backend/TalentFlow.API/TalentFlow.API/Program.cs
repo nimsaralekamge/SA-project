@@ -5,6 +5,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TalentFlow.API.Data;
 using TalentFlow.API.Services;
+using TalentFlow.API.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IApplicationService,
                            ApplicationService>();
+
+builder.Services.AddScoped<JobService>();                          
 
 
 // Swagger Services

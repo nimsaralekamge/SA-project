@@ -10,7 +10,7 @@ export interface SalaryRange {
 }
 
 export interface Job {
-  id: string;
+  id: number;
   title: string;
   department: string;
   location: string;
