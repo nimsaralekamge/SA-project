@@ -14,6 +14,9 @@ interface ReviewStepProps {
   isSubmitted: boolean;
   onStartNewProfile: () => void;
   submitError?: string | null;
+  /** Full URL to the photo already stored on the backend (used when viewing a saved profile,
+   *  since we won't have a local File to build an object URL from). */
+  savedPhotoUrl?: string | null;
 }
 
 function ReviewRow({ label, value }: { label: string; value: string }) {
@@ -49,6 +52,7 @@ export default function ReviewStep({
   isSubmitted,
   onStartNewProfile,
   submitError,
+  savedPhotoUrl,
 }: ReviewStepProps) {
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
 
@@ -62,10 +66,21 @@ export default function ReviewStep({
     return () => URL.revokeObjectURL(url);
   }, [profile.photo]);
 
+  // Prefer a freshly-picked file's preview; fall back to the URL already saved on the backend.
+  const displayPhotoUrl = photoPreviewUrl || savedPhotoUrl || null;
+
   if (isSubmitted) {
     return (
       <SectionCard title="Profile saved" subtitle="Your profile is live for recruiters to find">
         <div className="flex flex-col items-center text-center gap-3 py-6">
+          {displayPhotoUrl && (
+            <img
+              src={displayPhotoUrl}
+              alt="Profile photo"
+              className="w-14 h-14 rounded-full object-cover"
+              style={{ border: `1px solid ${COLORS.border}` }}
+            />
+          )}
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ backgroundColor: "rgba(44,191,191,0.12)" }}
@@ -101,10 +116,10 @@ export default function ReviewStep({
             <EditButton onClick={() => onEditStep("personal")} />
           </div>
           <div className="rounded-lg px-3 py-2" style={{ backgroundColor: COLORS.panelAlt, border: `1px solid ${COLORS.border}` }}>
-            {photoPreviewUrl && (
+            {displayPhotoUrl && (
               <div className="flex items-center gap-2.5 pb-2 mb-1" style={{ borderBottom: `1px solid ${COLORS.border}` }}>
                 <img
-                  src={photoPreviewUrl}
+                  src={displayPhotoUrl}
                   alt="Profile photo"
                   className="w-9 h-9 rounded-full object-cover"
                   style={{ border: `1px solid ${COLORS.border}` }}

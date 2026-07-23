@@ -77,20 +77,20 @@ namespace TalentFlow.API.Controllers
 
             if (dto.Photo != null)
             {
-                var photoFolder = Path.Combine(
+                var photoUploadFolder = Path.Combine(
                     _env.WebRootPath ?? Path.Combine(_env.ContentRootPath, "wwwroot"),
                     "uploads",
                     "photos");
 
-                Directory.CreateDirectory(photoFolder);
+                Directory.CreateDirectory(photoUploadFolder);
 
                 photoFileName =
                     $"{Guid.NewGuid()}_{dto.Photo.FileName}";
 
-                var photoPath =
-                    Path.Combine(photoFolder, photoFileName);
+                var photoFilePath =
+                    Path.Combine(photoUploadFolder, photoFileName);
 
-                using (var stream = new FileStream(photoPath, FileMode.Create))
+                using (var stream = new FileStream(photoFilePath, FileMode.Create))
                 {
                     await dto.Photo.CopyToAsync(stream);
                 }
@@ -127,9 +127,9 @@ namespace TalentFlow.API.Controllers
 
         // UPDATE PROFILE
         [HttpPut("{id}")]
-        public async Task<ActionResult<CandidateProfile>> UpdateProfile(
+        public async Task<IActionResult> UpdateProfile(
             int id,
-            [FromForm] CandidateProfileDto dto)
+            [FromBody] CandidateProfile updated)
         {
             var profile =
                 await _context.CandidateProfiles.FindAsync(id);
@@ -137,62 +137,14 @@ namespace TalentFlow.API.Controllers
             if (profile == null)
                 return NotFound();
 
-            if (dto.Resume != null)
-            {
-                var uploadFolder = Path.Combine(
-                    _env.WebRootPath ?? Path.Combine(_env.ContentRootPath, "wwwroot"),
-                    "uploads",
-                    "resumes");
-
-                Directory.CreateDirectory(uploadFolder);
-
-                var resumeFileName =
-                    $"{Guid.NewGuid()}_{dto.Resume.FileName}";
-
-                var filePath =
-                    Path.Combine(uploadFolder, resumeFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await dto.Resume.CopyToAsync(stream);
-                }
-
-                profile.ResumeFileName = resumeFileName;
-                profile.ResumeUrl = $"/uploads/resumes/{resumeFileName}";
-            }
-
-            if (dto.Photo != null)
-            {
-                var photoFolder = Path.Combine(
-                    _env.WebRootPath ?? Path.Combine(_env.ContentRootPath, "wwwroot"),
-                    "uploads",
-                    "photos");
-
-                Directory.CreateDirectory(photoFolder);
-
-                var photoFileName =
-                    $"{Guid.NewGuid()}_{dto.Photo.FileName}";
-
-                var photoPath =
-                    Path.Combine(photoFolder, photoFileName);
-
-                using (var stream = new FileStream(photoPath, FileMode.Create))
-                {
-                    await dto.Photo.CopyToAsync(stream);
-                }
-
-                profile.PhotoFileName = photoFileName;
-                profile.PhotoUrl = $"/uploads/photos/{photoFileName}";
-            }
-
-            profile.FullName = dto.FullName;
-            profile.Title = dto.Title;
-            profile.Email = dto.Email;
-            profile.Phone = dto.Phone;
-            profile.Location = dto.Location;
-            profile.YearsExperience = dto.YearsExperience;
-            profile.Summary = dto.Summary;
-            profile.Skills = dto.Skills ?? profile.Skills;
+            profile.FullName = updated.FullName;
+            profile.Title = updated.Title;
+            profile.Email = updated.Email;
+            profile.Phone = updated.Phone;
+            profile.Location = updated.Location;
+            profile.YearsExperience = updated.YearsExperience;
+            profile.Summary = updated.Summary;
+            profile.Skills = updated.Skills;
             profile.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
