@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TopBar from "../components/common/TopBar";
 import SideNav from "../components/common/SideNav";
-import { COLORS } from "../constants/theme";
 import { loadDraft, saveDraft } from "../utils/localStorageDraft";
 import {
   User,
@@ -11,7 +9,30 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
+  Shield,
+  KeyRound,
+  UserCheck,
+  Search,
+  Sparkles,
+  SlidersHorizontal,
 } from "lucide-react";
+
+// ---------------------------------------------------------------------------
+// Design tokens — Ultra-dark cinematic luxury theme
+// ---------------------------------------------------------------------------
+const C = {
+  bg: "#080c10",
+  panel: "#0d1318",
+  panelAlt: "#121922",
+  border: "rgba(255,255,255,0.06)",
+  borderStrong: "rgba(255,255,255,0.14)",
+  text: "#FFFFFF",
+  textDim: "#5c7086",
+  teal: "#22d9d9",
+  blue: "#27668C",
+  gold: "#D9B855",
+  red: "#E0665A",
+} as const;
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<"profile" | "security" | "notifications">("profile");
@@ -20,7 +41,7 @@ export default function SettingsPage() {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const API_BASE = "http://localhost:5016"; // backend API base URL
+  const API_BASE = "http://localhost:5016"; // Backend API base URL
 
   // Profile Data State
   const [profileData, setProfileData] = useState({
@@ -63,7 +84,7 @@ export default function SettingsPage() {
     }
   };
 
-  // 1. Fetch Profile Data (DB First - First Record [0], Local Draft Fallback)
+  // 1. Fetch Profile Data
   useEffect(() => {
     async function fetchCandidateProfile() {
       try {
@@ -72,7 +93,6 @@ export default function SettingsPage() {
 
         if (response.ok) {
           const data = await response.json();
-          // API එකෙන් List එකක් එනවා නම් DB එකේ මුලින්ම හදපු record එක (Index 0) ගන්නවා
           const profile = Array.isArray(data) ? data[0] : data;
 
           if (profile && (profile.fullName || profile.email)) {
@@ -102,7 +122,7 @@ export default function SettingsPage() {
     fetchCandidateProfile();
   }, []);
 
-  // 2. Save Updated Profile (Save to DB & Sync with Local Draft)
+  // 2. Save Updated Profile
   const handleProfileSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -118,11 +138,9 @@ export default function SettingsPage() {
       formData.append("yearsExperience", profileData.yearsExperience.toString());
       formData.append("summary", profileData.summary || "");
 
-      // Local Draft එකත් එක්ක Sync කිරීම
       const currentDraft = loadDraft() || {};
       saveDraft({ ...currentDraft, ...profileData });
 
-      // Backend API Update Call
       const response = await fetch(`${API_BASE}/api/CandidateProfile`, {
         method: "POST",
         body: formData,
@@ -178,144 +196,235 @@ export default function SettingsPage() {
     : "SP";
 
   return (
-    <div className="min-h-screen w-full flex flex-col" style={{ backgroundColor: COLORS.bg }}>
-      <TopBar userName={profileData.fullName || "User Profile"} userInitials={initials} />
+    <div className="w-full min-h-screen flex flex-col font-sans" style={{ background: C.bg, color: C.text }}>
+      
+      {/* Top Application Nav Bar */}
+      <nav
+        className="w-full px-10 py-5 border-b sticky top-0 z-20 backdrop-blur-md shadow-lg flex justify-between items-center"
+        style={{ borderColor: C.border, background: `${C.bg}EE` }}
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className="h-9 w-9 rounded-xl flex items-center justify-center font-bold text-base shadow-lg"
+            style={{ background: `linear-gradient(135deg, ${C.teal}, #0f5f5f)`, color: "#08101b" }}
+          >
+            TF
+          </div>
+          <span className="font-extrabold tracking-tight text-lg" style={{ color: C.text }}>
+            Talent<span style={{ color: C.teal }}>Flow</span> AI
+          </span>
+        </div>
 
-      <div className="flex flex-1 relative overflow-x-hidden">
+        <div className="flex-1 max-w-xl mx-8 relative hidden md:block">
+          <input
+            type="text"
+            placeholder="Search system settings, preferences, or profile..."
+            className="w-full border rounded-xl pl-11 pr-4 py-2.5 text-sm outline-none transition-all shadow-inner"
+            style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
+          />
+          <div className="absolute left-3.5 top-3" style={{ color: C.textDim }}>
+            <Search size={16} />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div
+            className="relative p-2.5 rounded-xl shadow-inner shrink-0 cursor-pointer"
+            style={{ background: C.panel, border: `1px solid ${C.border}` }}
+          >
+            <Bell size={18} style={{ color: C.textDim }} />
+            <span className="absolute top-2 right-2 h-2 w-2 rounded-full" style={{ background: C.teal }}></span>
+          </div>
+          <div className="flex items-center gap-3 pl-3 border-l shrink-0" style={{ borderColor: C.border }}>
+            <div
+              className="h-10 w-10 rounded-full flex items-center justify-center text-xs font-bold shadow-md"
+              style={{ background: `linear-gradient(135deg, #3c5a76, #1c2c3d)`, color: C.text }}
+            >
+              {initials}
+            </div>
+            <div className="text-right hidden sm:block leading-tight">
+              <div className="text-xs font-bold" style={{ color: C.text }}>
+                {profileData.fullName || "User Account"}
+              </div>
+              <div className="text-[10px] font-semibold tracking-wider mt-0.5" style={{ color: C.teal }}>
+                {profileData.title || "ADMIN / RECRUITER"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar Component */}
         <SideNav />
 
-        <main className="flex-1 p-6 text-white overflow-y-auto">
-          <div className="max-w-4xl mx-auto space-y-6">
+        <main className="p-10 flex-1 overflow-y-auto">
+          <div className="max-w-5xl mx-auto space-y-6">
 
-            {/* Header */}
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Account Settings</h1>
-              <p className="text-sm text-[#8A9199] mt-0.5">
-                Manage your account preferences and profile details synced with the system.
-              </p>
+            {/* Header Section */}
+            <div className="flex justify-between items-end pb-2">
+              <div>
+                <h1 className="text-3xl font-extrabold tracking-tight flex items-center gap-3" style={{ color: C.text }}>
+                  <SlidersHorizontal size={30} style={{ color: C.teal }} />
+                  Account Settings
+                </h1>
+                <p className="mt-1.5 text-sm" style={{ color: C.textDim }}>
+                  Manage system security, sync preferences, and profile configurations for TalentFlow.
+                </p>
+              </div>
             </div>
 
-            {/* Success Alert */}
+            {/* Alert Messages */}
             {savedSuccess && (
-              <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl text-xs flex items-center gap-2">
-                <CheckCircle2 size={16} />
-                <span>Settings updated and synced successfully!</span>
+              <div
+                className="p-4 rounded-xl flex items-center gap-3 text-xs border shadow-xl transition-all"
+                style={{ background: "rgba(16,185,129,0.15)", borderColor: "rgba(16,185,129,0.35)", color: "#10b981" }}
+              >
+                <CheckCircle2 size={18} />
+                <span className="font-semibold">Settings updated and synchronized with the database successfully!</span>
               </div>
             )}
 
-            {/* Error Alert */}
             {errorMessage && (
-              <div className="p-3 bg-rose-500/10 border border-rose-500/30 text-rose-400 rounded-xl text-xs flex items-center gap-2">
-                <AlertCircle size={16} />
-                <span>{errorMessage}</span>
+              <div
+                className="p-4 rounded-xl flex items-center gap-3 text-xs border shadow-xl transition-all"
+                style={{ background: `${C.red}15`, borderColor: `${C.red}40`, color: C.red }}
+              >
+                <AlertCircle size={18} />
+                <span className="font-semibold">{errorMessage}</span>
               </div>
             )}
 
-            {/* Main Settings Card */}
-            <div className="bg-[#20272D] border border-white/10 rounded-xl overflow-hidden flex flex-col md:flex-row min-h-[450px]">
+            {/* Main Workspace Card */}
+            <div
+              className="rounded-2xl border flex flex-col md:flex-row overflow-hidden shadow-2xl min-h-[500px]"
+              style={{ background: C.panel, borderColor: C.border }}
+            >
               
-              {/* Settings Navigation Tabs */}
-              <div className="w-full md:w-56 bg-[#1A2126] border-b md:border-b-0 md:border-r border-white/10 p-3 space-y-1 shrink-0">
+              {/* Vertical Navigation Tabs */}
+              <div
+                className="w-full md:w-64 p-4 space-y-2 shrink-0 border-b md:border-b-0 md:border-r"
+                style={{ background: C.panelAlt, borderColor: C.border }}
+              >
                 <button
                   onClick={() => { setActiveTab("profile"); setErrorMessage(""); }}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                    activeTab === "profile"
-                      ? "bg-[#0CF2F2]/10 text-[#0CF2F2] border border-[#0CF2F2]/30"
-                      : "text-[#8A9199] hover:bg-white/5 hover:text-white"
-                  }`}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all uppercase tracking-wider"
+                  style={{
+                    background: activeTab === "profile" ? `${C.teal}20` : "transparent",
+                    color: activeTab === "profile" ? C.teal : C.textDim,
+                    border: `1px solid ${activeTab === "profile" ? `${C.teal}50` : "transparent"}`,
+                  }}
                 >
                   <User size={16} /> Profile Details
                 </button>
 
                 <button
                   onClick={() => { setActiveTab("security"); setErrorMessage(""); }}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                    activeTab === "security"
-                      ? "bg-[#0CF2F2]/10 text-[#0CF2F2] border border-[#0CF2F2]/30"
-                      : "text-[#8A9199] hover:bg-white/5 hover:text-white"
-                  }`}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all uppercase tracking-wider"
+                  style={{
+                    background: activeTab === "security" ? `${C.teal}20` : "transparent",
+                    color: activeTab === "security" ? C.teal : C.textDim,
+                    border: `1px solid ${activeTab === "security" ? `${C.teal}50` : "transparent"}`,
+                  }}
                 >
                   <Lock size={16} /> Security & Password
                 </button>
 
                 <button
                   onClick={() => { setActiveTab("notifications"); setErrorMessage(""); }}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                    activeTab === "notifications"
-                      ? "bg-[#0CF2F2]/10 text-[#0CF2F2] border border-[#0CF2F2]/30"
-                      : "text-[#8A9199] hover:bg-white/5 hover:text-white"
-                  }`}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all uppercase tracking-wider"
+                  style={{
+                    background: activeTab === "notifications" ? `${C.teal}20` : "transparent",
+                    color: activeTab === "notifications" ? C.teal : C.textDim,
+                    border: `1px solid ${activeTab === "notifications" ? `${C.teal}50` : "transparent"}`,
+                  }}
                 >
                   <Bell size={16} /> Notifications
                 </button>
               </div>
 
-              {/* Tab Form Content */}
-              <div className="flex-1 p-6">
+              {/* Form Content Panel */}
+              <div className="flex-1 p-8">
                 {loading ? (
-                  <div className="h-full flex flex-col items-center justify-center py-16 text-[#8A9199]">
-                    <Loader2 size={24} className="animate-spin mb-2 text-[#0CF2F2]" />
-                    <span className="text-xs">Loading profile information...</span>
+                  <div className="h-full py-20 flex flex-col items-center justify-center gap-3" style={{ color: C.teal }}>
+                    <Loader2 size={32} className="animate-spin" />
+                    <span className="text-xs font-semibold" style={{ color: C.textDim }}>Retrieving profile data...</span>
                   </div>
                 ) : (
                   <>
                     {/* 1. PROFILE DETAILS TAB */}
                     {activeTab === "profile" && (
-                      <form onSubmit={handleProfileSave} className="space-y-4">
-                        <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">
-                          Personal Details
-                        </h3>
+                      <form onSubmit={handleProfileSave} className="space-y-6">
+                        <div className="flex items-center justify-between pb-4 border-b" style={{ borderColor: C.border }}>
+                          <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2" style={{ color: C.text }}>
+                            <UserCheck size={18} style={{ color: C.teal }} /> Personal Profile Info
+                          </h3>
+                        </div>
 
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                           <div>
-                            <label className="block text-xs font-medium text-[#8A9199] mb-1">Full Name</label>
+                            <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                              Full Name
+                            </label>
                             <input
                               type="text"
                               value={profileData.fullName}
                               onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
                               placeholder="e.g. Sashik Mindaka"
-                              className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                              className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                              style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                             />
                           </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                              <label className="block text-xs font-medium text-[#8A9199] mb-1">Job Title</label>
+                              <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                                Job Title
+                              </label>
                               <input
                                 type="text"
                                 value={profileData.title}
                                 onChange={(e) => setProfileData({ ...profileData, title: e.target.value })}
                                 placeholder="Software Engineer"
-                                className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                                className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                                style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                               />
                             </div>
 
                             <div>
-                              <label className="block text-xs font-medium text-[#8A9199] mb-1">Location</label>
+                              <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                                Location
+                              </label>
                               <input
                                 type="text"
                                 value={profileData.location}
                                 onChange={(e) => setProfileData({ ...profileData, location: e.target.value })}
                                 placeholder="Colombo, Sri Lanka"
-                                className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                                className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                                style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                               />
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                              <label className="block text-xs font-medium text-[#8A9199] mb-1">Email Address</label>
+                              <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                                Email Address
+                              </label>
                               <input
                                 type="email"
                                 value={profileData.email}
                                 onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
                                 placeholder="sashik@example.com"
-                                className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                                className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                                style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                               />
                             </div>
 
                             <div>
-                              <label className="block text-xs font-medium text-[#8A9199] mb-1">Phone Number (Digits Only)</label>
+                              <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                                Phone Number (Digits Only)
+                              </label>
                               <input
                                 type="text"
                                 inputMode="numeric"
@@ -327,7 +436,8 @@ export default function SettingsPage() {
                                   })
                                 }
                                 placeholder="0771234567"
-                                className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                                className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                                style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                               />
                             </div>
                           </div>
@@ -337,9 +447,13 @@ export default function SettingsPage() {
                           <button
                             type="submit"
                             disabled={saving}
-                            className="px-4 py-2 bg-[#0CF2F2] text-[#0B1416] font-bold text-xs rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
+                            className="px-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg hover:opacity-90 disabled:opacity-50"
+                            style={{
+                              background: `linear-gradient(135deg, ${C.teal}, #0f5f5f)`,
+                              color: "#08101b",
+                            }}
                           >
-                            {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+                            {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                             Save Changes
                           </button>
                         </div>
@@ -348,42 +462,53 @@ export default function SettingsPage() {
 
                     {/* 2. SECURITY TAB */}
                     {activeTab === "security" && (
-                      <form onSubmit={handlePasswordSave} className="space-y-4">
-                        <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">
-                          Password Settings
-                        </h3>
+                      <form onSubmit={handlePasswordSave} className="space-y-6">
+                        <div className="flex items-center justify-between pb-4 border-b" style={{ borderColor: C.border }}>
+                          <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2" style={{ color: C.text }}>
+                            <Shield size={18} style={{ color: C.teal }} /> Password & Authentication
+                          </h3>
+                        </div>
 
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                           <div>
-                            <label className="block text-xs font-medium text-[#8A9199] mb-1">Current Password</label>
+                            <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                              Current Password
+                            </label>
                             <input
                               type="password"
                               value={passwordData.currentPassword}
                               onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                               placeholder="••••••••"
-                              className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                              className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                              style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs font-medium text-[#8A9199] mb-1">New Password</label>
+                            <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                              New Password
+                            </label>
                             <input
                               type="password"
                               value={passwordData.newPassword}
                               onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                               placeholder="••••••••"
-                              className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                              className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                              style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs font-medium text-[#8A9199] mb-1">Confirm New Password</label>
+                            <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: C.textDim }}>
+                              Confirm New Password
+                            </label>
                             <input
                               type="password"
                               value={passwordData.confirmPassword}
                               onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                               placeholder="••••••••"
-                              className="w-full bg-[#1A2126] border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#0CF2F2]"
+                              className="w-full rounded-xl py-2.5 px-4 text-xs outline-none transition-all shadow-inner border focus:border-[#22d9d9]"
+                              style={{ background: C.panelAlt, borderColor: C.border, color: C.text }}
                             />
                           </div>
                         </div>
@@ -391,9 +516,13 @@ export default function SettingsPage() {
                         <div className="pt-4 flex justify-end">
                           <button
                             type="submit"
-                            className="px-4 py-2 bg-[#0CF2F2] text-[#0B1416] font-bold text-xs rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity"
+                            className="px-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg hover:opacity-90"
+                            style={{
+                              background: `linear-gradient(135deg, ${C.teal}, #0f5f5f)`,
+                              color: "#08101b",
+                            }}
                           >
-                            <Save size={14} /> Update Password
+                            <KeyRound size={16} /> Update Password
                           </button>
                         </div>
                       </form>
@@ -401,35 +530,43 @@ export default function SettingsPage() {
 
                     {/* 3. NOTIFICATIONS TAB */}
                     {activeTab === "notifications" && (
-                      <div className="space-y-4">
-                        <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">
-                          Notification Preferences
-                        </h3>
+                      <div className="space-y-6">
+                        <div className="flex items-center justify-between pb-4 border-b" style={{ borderColor: C.border }}>
+                          <h3 className="text-sm font-extrabold uppercase tracking-wider flex items-center gap-2" style={{ color: C.text }}>
+                            <Sparkles size={18} style={{ color: C.teal }} /> System Preferences
+                          </h3>
+                        </div>
 
                         <div className="space-y-3">
-                          <label className="flex items-center justify-between p-3 bg-[#1A2126] rounded-lg border border-white/5 cursor-pointer">
+                          <label
+                            className="flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all hover:border-[#22d9d9]/40"
+                            style={{ background: C.panelAlt, borderColor: C.border }}
+                          >
                             <div>
-                              <p className="text-xs font-medium text-white">System Email Alerts</p>
-                              <p className="text-[10px] text-[#8A9199]">Receive email notifications for account updates.</p>
+                              <p className="text-xs font-bold" style={{ color: C.text }}>System Email Alerts</p>
+                              <p className="text-[11px] mt-0.5" style={{ color: C.textDim }}>Receive automatic email notifications for important system activities.</p>
                             </div>
                             <input
                               type="checkbox"
                               checked={notifications.emailAlerts}
                               onChange={(e) => setNotifications({ ...notifications, emailAlerts: e.target.checked })}
-                              className="accent-[#0CF2F2] h-4 w-4 cursor-pointer"
+                              className="h-4 w-4 rounded cursor-pointer accent-[#22d9d9]"
                             />
                           </label>
 
-                          <label className="flex items-center justify-between p-3 bg-[#1A2126] rounded-lg border border-white/5 cursor-pointer">
+                          <label
+                            className="flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all hover:border-[#22d9d9]/40"
+                            style={{ background: C.panelAlt, borderColor: C.border }}
+                          >
                             <div>
-                              <p className="text-xs font-medium text-white">Candidate Activity Updates</p>
-                              <p className="text-[10px] text-[#8A9199]">Receive updates when candidate profiles change.</p>
+                              <p className="text-xs font-bold" style={{ color: C.text }}>Candidate Activity Updates</p>
+                              <p className="text-[11px] mt-0.5" style={{ color: C.textDim }}>Get real-time status changes when candidates apply or advance stages.</p>
                             </div>
                             <input
                               type="checkbox"
                               checked={notifications.candidateUpdates}
                               onChange={(e) => setNotifications({ ...notifications, candidateUpdates: e.target.checked })}
-                              className="accent-[#0CF2F2] h-4 w-4 cursor-pointer"
+                              className="h-4 w-4 rounded cursor-pointer accent-[#22d9d9]"
                             />
                           </label>
                         </div>
@@ -440,9 +577,13 @@ export default function SettingsPage() {
                               setSavedSuccess(true);
                               setTimeout(() => setSavedSuccess(false), 3000);
                             }}
-                            className="px-4 py-2 bg-[#0CF2F2] text-[#0B1416] font-bold text-xs rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity"
+                            className="px-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg hover:opacity-90"
+                            style={{
+                              background: `linear-gradient(135deg, ${C.teal}, #0f5f5f)`,
+                              color: "#08101b",
+                            }}
                           >
-                            <Save size={14} /> Save Preferences
+                            <Save size={16} /> Save Preferences
                           </button>
                         </div>
                       </div>
