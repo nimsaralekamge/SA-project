@@ -1,5 +1,6 @@
 import React, { useState, useMemo, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import SideNav from "../components/common/SideNav";
 
 import {
   Zap,
@@ -1559,39 +1560,8 @@ function CandidateView({
 
   return (
     <div style={{ display: "flex" }}>
-      {/* Sidebar */}
-      <aside
-        style={{
-          width: 220,
-          borderRight: `1px solid ${LINE}`,
-          padding: "24px 14px",
-          flexShrink: 0,
-          minHeight: 640,
-        }}
-      >
-        {navItems.map(({ icon: Icon, label, active }) => (
-          <div
-            key={label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "10px 12px",
-              borderRadius: 9,
-              marginBottom: 4,
-              color: active ? TXT : TXTDIM,
-              background: active ? PANEL2 : "transparent",
-              borderLeft: active ? `2px solid ${CYAN}` : "2px solid transparent",
-              fontSize: 13.5,
-              fontWeight: active ? 700 : 500,
-              cursor: "pointer",
-            }}
-          >
-            <Icon size={16} />
-            {label}
-          </div>
-        ))}
-      </aside>
+
+      <SideNav />
 
       {/* Main */}
       <main style={{ flex: 1, padding: "28px 32px", minWidth: 0 }}>
