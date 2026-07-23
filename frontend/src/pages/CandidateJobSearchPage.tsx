@@ -6,7 +6,7 @@ import {
   type SetStateAction,
   type ReactNode,
 } from "react";
-import { Search, SlidersHorizontal, MapPin, Briefcase, Loader2, Bookmark, Bell } from "lucide-react";
+import { Search, SlidersHorizontal, MapPin, Briefcase, Loader2, Bookmark, Bell, CheckCircle } from "lucide-react";
 import SideNav from "../components/common/SideNav";
 import type {
   Job,
@@ -42,6 +42,7 @@ export default function CandidateJobSearchPage() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Job | null>(null);
   const [savedIds, setSavedIds] = useState<Set<number>>(new Set());
+  const [appliedIds, setAppliedIds] = useState<Set<number>>(new Set()); // Applied Jobs Track කරන්න
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
@@ -90,6 +91,12 @@ export default function CandidateJobSearchPage() {
       next.has(job.id) ? next.delete(job.id) : next.add(job.id);
       return next;
     });
+  }
+
+  // Application Submit Handler
+  function handleApply(job: Job) {
+    setAppliedIds((prev) => new Set(prev).add(job.id));
+    alert(`Successfully applied for ${job.title}!`);
   }
 
   return (
@@ -237,7 +244,13 @@ export default function CandidateJobSearchPage() {
               {/* Selected Job Sticky Details */}
               <div className="hidden lg:block sticky top-6">
                 {selected ? (
-                  <JobDetail job={selected} saved={savedIds.has(selected.id)} onToggleSave={toggleSave} />
+                  <JobDetail
+                    job={selected}
+                    saved={savedIds.has(selected.id)}
+                    hasApplied={appliedIds.has(selected.id)}
+                    onToggleSave={toggleSave}
+                    onApply={handleApply}
+                  />
                 ) : (
                   <div
                     className="flex h-64 items-center justify-center rounded-2xl border border-dashed text-sm"
@@ -410,11 +423,15 @@ function EmptyResults({ onClear }: { onClear: () => void }) {
 function JobDetail({
   job,
   saved,
+  hasApplied,
   onToggleSave,
+  onApply,
 }: {
   job: Job;
   saved: boolean;
+  hasApplied: boolean;
   onToggleSave: (job: Job) => void;
+  onApply: (job: Job) => void;
 }) {
   return (
     <div
@@ -492,14 +509,26 @@ function JobDetail({
         </section>
       </div>
 
+      {/* Apply Button Update */}
       <button
-        className="w-full rounded-xl py-3 text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:scale-[1.01]"
+        disabled={hasApplied}
+        onClick={() => onApply(job)}
+        className="w-full rounded-xl py-3 text-xs font-extrabold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
         style={{
-          background: `linear-gradient(135deg, ${C.teal}, #0f5f5f)`,
-          color: "#08101b",
+          background: hasApplied
+            ? "rgba(34, 217, 217, 0.2)"
+            : `linear-gradient(135deg, ${C.teal}, #0f5f5f)`,
+          color: hasApplied ? C.teal : "#08101b",
+          cursor: hasApplied ? "not-allowed" : "pointer",
         }}
       >
-        Apply for Position
+        {hasApplied ? (
+          <>
+            <CheckCircle size={16} /> Applied
+          </>
+        ) : (
+          "Apply for Position"
+        )}
       </button>
     </div>
   );
