@@ -9,9 +9,7 @@ import {
   Clock,
   Check,
   X,
-  User,
   FileText,
-  BarChart3,
   Bell,
   ChevronRight,
   ChevronDown,
@@ -29,8 +27,8 @@ import {
   FileSearch,
   Gauge,
   ArrowRight,
-  Settings,
-  Users,
+  Mail,
+  Phone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -413,15 +411,51 @@ function Card({ children, style }: { children: ReactNode; style?: React.CSSPrope
   );
 }
 
+/* --- Footer link column, reused across footer groups --- */
+function FooterCol({ title, links }: { title: string; links: string[] }) {
+  return (
+    <div>
+      <div
+        style={{
+          fontSize: 11.5,
+          fontWeight: 700,
+          color: TXT,
+          textTransform: "uppercase",
+          letterSpacing: "0.06em",
+          marginBottom: 14,
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {links.map((l) => (
+          <span
+            key={l}
+            style={{
+              fontSize: 12.5,
+              color: TXTDIM,
+              cursor: "pointer",
+            }}
+          >
+            {l}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- LANDING PAGE (pre-login home) ---------------- */
 function LandingPage({
   onSearch,
   onLoginClick,
+  onRegisterClick,
   onBrowseAll,
   onViewJob,
 }: {
   onSearch: (q: string) => void;
   onLoginClick: () => void;
+  onRegisterClick: () => void;
   onBrowseAll: () => void;
   onViewJob: () => void;
 }) {
@@ -475,13 +509,50 @@ function LandingPage({
               write a cover letter.
             </p>
 
+            {/* Account actions — lets a visitor jump straight into a guest
+                dashboard, create an account, or sign in, before they even
+                reach the search bar. */}
+            <div style={{ display: "flex", gap: 10, marginTop: 22, flexWrap: "wrap" }}>
+             
+              <button
+                onClick={onRegisterClick}
+                style={{
+                  padding: "10px 16px",
+                  borderRadius: 9,
+                  border: "none",
+                  background: `linear-gradient(135deg, ${CYAN}, ${TEAL})`,
+                  color: INK,
+                  fontWeight: 800,
+                  fontSize: 13,
+                  cursor: "pointer",
+                }}
+              >
+                Create free account
+              </button>
+              <button
+                onClick={onLoginClick}
+                style={{
+                  padding: "10px 16px",
+                  borderRadius: 9,
+                  border: `1px solid ${LINE}`,
+                  background: "transparent",
+                  color: TXTDIM,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: "pointer",
+                }}
+              >
+                I already have an account
+              </button>
+            </div>
+
             {/* Search */}
             <form
               onSubmit={(e: React.FormEvent) => {
                 e.preventDefault();
                 onSearch(query);
               }}
-              style={{ marginTop: 26, maxWidth: 560 }}
+              style={{ marginTop: 22, maxWidth: 560 }}
             >
               <div
                 style={{
@@ -951,28 +1022,90 @@ function LandingPage({
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ padding: "28px 40px" }}>
-        <div
-          style={{
-            maxWidth: 1180,
-            margin: "0 auto",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 14,
-          }}
-        >
-          <Logo />
-          <div style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
-            {["About", "Contact", "Privacy", "Terms"].map((l) => (
-              <span key={l} style={{ fontSize: 12.5, color: TXTDIM, cursor: "pointer" }}>
-                {l}
-              </span>
-            ))}
+      {/* Detailed footer */}
+      <footer style={{ padding: "48px 40px 26px" }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.3fr repeat(4, 1fr)",
+              gap: 32,
+              paddingBottom: 32,
+              borderBottom: `1px solid ${LINE}`,
+            }}
+          >
+            <div>
+              <Logo />
+              <p style={{ fontSize: 12.5, color: TXTDIM, marginTop: 14, maxWidth: 260, lineHeight: 1.6 }}>
+                AI-powered recruitment platform connecting 80,000+ candidates with 5,000+
+                companies across Sri Lanka and beyond.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
+                <span style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: TXTDIM }}>
+                  <Mail size={13} /> support@talentflow.ai
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: TXTDIM }}>
+                  <Phone size={13} /> +94 11 234 5678
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: TXTDIM }}>
+                  <MapPin size={13} /> Colombo, Sri Lanka
+                </span>
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 18 }}>
+                {["FB", "X", "IN", "IG"].map((label, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: 8,
+                      border: `1px solid ${LINE}`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                  {label}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <FooterCol title="Company" links={["About us", "Careers", "Newsroom", "Contact us"]} />
+            <FooterCol
+              title="For Candidates"
+              links={["Browse jobs", "Career advice", "Resume builder", "Salary guide"]}
+            />
+            <FooterCol
+              title="For Employers"
+              links={["Post a job", "Talent search", "Pricing", "Enterprise"]}
+            />
+            <FooterCol
+              title="Legal"
+              links={["Privacy policy", "Terms of service", "Cookie policy", "Accessibility"]}
+            />
           </div>
-          <span style={{ fontSize: 11.5, color: TXTDIM }}>© 2026 TalentFlow AI</span>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 12,
+              paddingTop: 20,
+            }}
+          >
+            <span style={{ fontSize: 11.5, color: TXTDIM }}>
+              © 2026 TalentFlow AI. All rights reserved.
+            </span>
+            <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 11.5, color: TXTDIM, cursor: "pointer" }}>Sitemap</span>
+              <span style={{ fontSize: 11.5, color: TXTDIM, cursor: "pointer" }}>Status</span>
+              <span style={{ fontSize: 11.5, color: TXTDIM, cursor: "pointer" }}>Security</span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
@@ -1548,15 +1681,7 @@ function CandidateView({
     (j) => decisions[j.id] !== "applied" && decisions[j.id] !== "ignored"
   ).sort((a, b) => b.match - a.match)[0];
 
-  const navItems: { icon: LucideIcon; label: string; active?: boolean }[] = [
-    { icon: BarChart3, label: "Dashboard", active: true },
-    { icon: User, label: "Profile" },
-    { icon: Users, label: "Candidates" },
-    { icon: FileText, label: "Applications" },
-    { icon: CalendarClock, label: "Interviews" },
-    { icon: Gauge, label: "AI Analytics" },
-    { icon: Settings, label: "Settings" },
-  ];
+  
 
   return (
     <div style={{ display: "flex" }}>
@@ -1931,6 +2056,7 @@ export default function TalentFlowDashboard() {
         <LandingPage
           onSearch={() => setScreen("jobs")}
           onLoginClick={() => navigate("/login")}
+          onRegisterClick={() => navigate("/register")}
           onBrowseAll={() => setScreen("jobs")}
           onViewJob={() => setScreen("jobs")}
         />
